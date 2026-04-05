@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gresources>
+  <gresource prefix="/dev/labellum/spark">
+    <file preprocess="xml-stripblanks">data/icons/devel-symbolic.svg</file>
+    <file>data/icons/logo.png</file>
+    <file compressed="true">style.css</file>
+  </gresource>
+</gresources>

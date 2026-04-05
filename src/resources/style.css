@@ -1,0 +1,45 @@
+headerbar.dev windowhandle {
+  background-image: cross-fade(10% -gtk-recolor(url("data/icons/devel-symbolic.svg")), image(transparent));
+  background-repeat: repeat-x;
+}
+
+row.combo {
+  color: var(--accent-color);
+}
+row.combo.acc {
+  color: var(--accent-color);
+}
+row.combo.yel {
+  color: var(--accent-yellow);
+}
+row.combo.pur {
+  color: var(--accent-purple);
+}
+row.entry {
+  border-radius: 10px;
+}
+
+textview.view {
+  border-radius: 10px;
+}
+
+textview.view.monospace text {
+  font-family: "Adwaita Mono, monospace";
+  font-size: 16px;
+}
+
+row.entry.monospace text {
+  font-family: "Adwaita Mono, monospace";
+  font-size: 16px;
+}
+
+.acc {
+  color: var(--accent-color);
+}
+
+.pur {
+  color: var(--accent-purple);
+}
+.yel {
+  color: var(--accent-yellow);
+}
