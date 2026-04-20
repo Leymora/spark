@@ -1,3 +1,4 @@
+#![allow(unused)]
 mod config;
 mod custom_button;
 
@@ -9,6 +10,7 @@ use smol;
 use std::io::BufRead;
 use std::io::BufReader;
 use std::io::Write;
+use std::thread;
 use std::time::Duration;
 
 use std::cell::Cell;
@@ -40,7 +42,7 @@ const APP_ID: &str = "dev.labellum.spark";
 
 fn main() -> glib::ExitCode {
     // Disable DTR with "stty -F /dev/ttyACM0 -hupcl" to hopefully stop Arduino from resetting when a serial connection is opened
-    let process = Command::new("stty")
+    let _process = Command::new("stty")
         .arg("-F")
         .arg("/dev/ttyACM0")
         .arg("-hupcl")
@@ -57,6 +59,7 @@ fn main() -> glib::ExitCode {
     // Connect to "activate" signal of "app"
     app.connect_activate(build_ui);
 
+    println!("\n\x1b[30;43mWelcome to Spark 󱐋\x1b[0m\n");
     app.run();
 
     println!("\n🗑️ Deleting temp files...\n");
@@ -286,12 +289,11 @@ fn build_ui(app: &Application) {
             } else {
                 c_banner.set_revealed(true);
             }
-        } 
-        else {
+        } else {
             if COLOR_THEME == config::ColorTheme::Accent {
-                connect_button.add_css_class("suggested-action");
+                connect_button.set_css_classes(&["suggested-action"]);
             } else if COLOR_THEME == config::ColorTheme::Sparking {
-                connect_button.add_css_class("yel");
+                connect_button.set_css_classes(&["yel"]);
             }
             connect_button.set_label("Connect");
             c_port.replace(

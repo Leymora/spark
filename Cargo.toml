@@ -1,16 +1,16 @@
 [package]
-name = "spark"
-version = "0.1.0"
+name = "spark-serial"
+version = "0.1.2"
 edition = "2024"
 
 [dependencies]
-adw = { version = "0.8.1", package = "libadwaita", features = ["v1_8"] }
+adw = { version = "0.9.1", package = "libadwaita", features = ["v1_9"] }
 colored = "3.1.1"
-gtk = { version = "0.10.3", package = "gtk4", features = ["v4_20"] }
+gtk = { version = "0.11.2", package = "gtk4", features = ["v4_20"] }
 serial2 = "0.2.34"
 serialport = "4.8.1"
 smol = "2.0.2"
-webkit6 = "0.5.0"
+webkit6 = "0.6.1"
 
 [build-dependencies]
-glib-build-tools = "0.21.0"
+glib-build-tools = "0.22.0"
