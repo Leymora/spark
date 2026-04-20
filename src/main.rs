@@ -42,7 +42,7 @@ const APP_ID: &str = "dev.labellum.spark";
 
 fn main() -> glib::ExitCode {
 
-    let out_dir = env::var("OUT_DIR").unwrap();
+    unsafe { env::set_var("OUT_DIR", "src/") };
 
     // Disable DTR with "stty -F /dev/ttyACM0 -hupcl" to hopefully stop Arduino from resetting when a serial connection is opened
     let _process = Command::new("stty")
