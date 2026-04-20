@@ -1,5 +1,2 @@
 [env]
 OUT_DIR = { value = "src/", relative = true}
-
-[build]
-#rustflags = ["-Awarnings"]
