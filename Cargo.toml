@@ -2,6 +2,8 @@
 name = "spark-serial"
 version = "0.1.2"
 edition = "2024"
+description = "A neat and tidy Serial terminal written in GTK4/Libadwaita - Still a work in progress"
+license = "MIT"
 
 [dependencies]
 adw = { version = "0.9.1", package = "libadwaita", features = ["v1_9"] }
