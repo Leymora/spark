@@ -1,4 +1,3 @@
-#![allow(unused)]
 mod config;
 mod custom_button;
 
@@ -23,11 +22,12 @@ use std::rc::Rc;
 
 use colored::Colorize;
 
+use gio;
+
 use adw::prelude::*;
 use adw::{
     AboutDialog, ActionRow, Application, ApplicationWindow, Banner, ButtonRow, ComboRow, Dialog,
-    EntryRow, HeaderBar, StatusPage, StyleManager, SwitchRow, ToolbarStyle, ToolbarView, Window,
-    gio, glib,
+    EntryRow, HeaderBar, StatusPage, StyleManager, SwitchRow, ToolbarStyle, ToolbarView, Window, glib,
 };
 use gtk::{
     Adjustment, Box, CheckButton, CssProvider, Label, ListBox, ListView, MenuButton, Orientation,
@@ -42,8 +42,6 @@ const APP_ID: &str = "dev.labellum.spark";
 
 fn main() -> glib::ExitCode {
 
-    unsafe { env::set_var("OUT_DIR", "src/") };
-
     // Disable DTR with "stty -F /dev/ttyACM0 -hupcl" to hopefully stop Arduino from resetting when a serial connection is opened
     let _process = Command::new("stty")
         .arg("-F")
@@ -54,6 +52,11 @@ fn main() -> glib::ExitCode {
     // Register and include resources
     gio::resources_register_include!("resources/resources.gresource")
         .expect("Failed to register resources.");
+
+
+    let out_dir = env::var("OUT_DIR").unwrap();
+    let target = "--target=".to_owned() + &out_dir + "/resources/resources.gresource";
+    println!("Out dir: {}", target);
 
     // Create a new application
     let app = Application::builder().application_id(APP_ID).build();
