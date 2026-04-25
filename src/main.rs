@@ -46,11 +46,6 @@ fn main() -> glib::ExitCode {
     gio::resources_register_include!("resources/resources.gresource")
         .expect("Failed to register resources.");
 
-
-    let out_dir = env::var("OUT_DIR").unwrap();
-    let target = "--target=".to_owned() + &out_dir + "/resources/resources.gresource";
-    println!("Out dir: {}", target);
-
     // Create a new application
     let app = Application::builder().application_id(APP_ID).build();
 

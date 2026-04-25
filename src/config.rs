@@ -1,4 +1,4 @@
-pub static VERSION: &str = "0.1.5";
+pub static VERSION: &str = "0.1.7";
 pub static GETTEXT_PACKAGE: &str = "spark-serial";
 pub static LOCALEDIR: &str = "/app/share/locale";
 pub static PKGDATADIR: &str = "/app/share/spark";
