@@ -22,12 +22,10 @@ use std::rc::Rc;
 
 use colored::Colorize;
 
-use gio;
-
 use adw::prelude::*;
 use adw::{
     AboutDialog, ActionRow, Application, ApplicationWindow, Banner, ButtonRow, ComboRow, Dialog,
-    EntryRow, HeaderBar, StatusPage, StyleManager, SwitchRow, ToolbarStyle, ToolbarView, Window, glib,
+    EntryRow, HeaderBar, StatusPage, StyleManager, SwitchRow, ToolbarStyle, ToolbarView, Window, glib, gio
 };
 use gtk::{
     Adjustment, Box, CheckButton, CssProvider, Label, ListBox, ListView, MenuButton, Orientation,

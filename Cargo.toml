@@ -7,7 +7,6 @@ license = "MIT"
 
 [dependencies]
 adw = { version = "0.9.1", package = "libadwaita", features = ["v1_9"] }
-gio = { git = "https://github.com/gtk-rs/gtk-rs-core.git", package = "gio" }
 colored = "3.1.1"
 gtk = { version = "0.11.2", package = "gtk4", features = ["v4_20"] }
 serial2 = "0.2.34"
