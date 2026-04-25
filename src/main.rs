@@ -5,22 +5,17 @@ use custom_button::CustomButton;
 
 use serial2::COMMON_BAUD_RATES;
 use serialport;
-use smol;
 use std::io::BufRead;
 use std::io::BufReader;
 use std::io::Write;
-use std::thread;
-use std::time::Duration;
 
+use std::time::Duration;
 use std::cell::Cell;
 use std::cell::RefCell;
 use std::env;
 use std::path::Path;
-use std::path::PathBuf;
 use std::process::Command;
 use std::rc::Rc;
-
-use colored::Colorize;
 
 use adw::prelude::*;
 use adw::{

@@ -1,17 +1,15 @@
 [package]
 name = "spark-serial"
-version = "0.1.5"
+version = "0.1.6"
 edition = "2024"
 description = "A neat and tidy Serial terminal written in GTK4/Libadwaita - Still a work in progress"
 license = "MIT"
 
 [dependencies]
 adw = { version = "0.9.1", package = "libadwaita", features = ["v1_9"] }
-colored = "3.1.1"
 gtk = { version = "0.11.2", package = "gtk4", features = ["v4_20"] }
 serial2 = "0.2.34"
 serialport = "4.8.1"
-smol = "2.0.2"
 
 [build-dependencies]
 glib-build-tools = "0.22.0"
