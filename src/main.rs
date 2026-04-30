@@ -29,19 +29,17 @@ use gtk::{
     gio::MenuModel,
 };
 
-use crate::config::COLOR_THEME;
-
 const APP_ID: &str = "dev.labellum.spark";
 
 fn main() -> glib::ExitCode {
 
     // Disable DTR with "stty -F /dev/ttyACM0 -hupcl" to hopefully stop Arduino from resetting when a serial connection is opened
-    let _process = Command::new("stty")
+/*     let _process = Command::new("stty")
         .arg("-F")
         .arg("/dev/ttyACM0")
         .arg("-hupcl")
         .status();
-
+ */
     // Register and include resources
     gio::resources_register_include!("resources/resources.gresource")
         .expect("Failed to register resources.");
@@ -101,16 +99,14 @@ fn build_ui(app: &Application) {
     // gio::resources_register(&res);
 
     let current_dir = env::current_dir().unwrap();
-    let dir_display: String = current_dir.display().to_string();
-    println!("{}", dir_display);
 
     // Disable DTR with "stty -F /dev/ttyACM0 -hupcl"
-    let _process = Command::new("stty")
+/*     let _process = Command::new("stty")
         .arg("-F")
         .arg("/dev/ttyACM0")
         .arg("-hupcl")
         .status()
-        .expect("shidd");
+        .expect("shidd"); */
 
     println!("\n📦 Creating temp files...\n");
 
@@ -253,9 +249,9 @@ fn build_ui(app: &Application) {
     connect_button.set_margin_bottom(12);
     connect_button.set_margin_start(12);
     connect_button.set_margin_end(12);
-    if COLOR_THEME == config::ColorTheme::Accent {
+    if config::COLOR_THEME == config::ColorTheme::Accent {
         connect_button.add_css_class("suggested-action");
-    } else if COLOR_THEME == config::ColorTheme::Sparking {
+    } else if config::COLOR_THEME == config::ColorTheme::Sparking {
         connect_button.add_css_class("yel");
     }
     connect_button.set_halign(gtk::Align::End);
@@ -284,9 +280,9 @@ fn build_ui(app: &Application) {
                 c_banner.set_revealed(true);
             }
         } else {
-            if COLOR_THEME == config::ColorTheme::Accent {
+            if config::COLOR_THEME == config::ColorTheme::Accent {
                 connect_button.set_css_classes(&["suggested-action"]);
-            } else if COLOR_THEME == config::ColorTheme::Sparking {
+            } else if config::COLOR_THEME == config::ColorTheme::Sparking {
                 connect_button.set_css_classes(&["yel"]);
             }
             connect_button.set_label("Connect");
@@ -320,9 +316,9 @@ fn build_ui(app: &Application) {
     baud_box.set_model(Some(&baud_box_strings));
     baud_box.set_use_subtitle(false);
 
-    if COLOR_THEME == config::ColorTheme::Accent {
+    if config::COLOR_THEME == config::ColorTheme::Accent {
         baud_box.add_css_class("acc");
-    } else if COLOR_THEME == config::ColorTheme::Sparking {
+    } else if config::COLOR_THEME == config::ColorTheme::Sparking {
         baud_box.add_css_class("pur");
     }
 
@@ -344,6 +340,8 @@ fn build_ui(app: &Application) {
         .can_focus(false)
         .can_target(false)
         .justification(gtk::Justification::Left)
+        .vexpand(false)
+        .vexpand_set(false)
         .indent(4)
         .build();
     //text_box.add_css_class("monospace");
@@ -364,9 +362,9 @@ fn build_ui(app: &Application) {
     button.set_margin_bottom(12);
     button.set_margin_start(12);
     button.set_margin_end(12);
-    if COLOR_THEME == config::ColorTheme::Accent {
+    if config::COLOR_THEME == config::ColorTheme::Accent {
         button.add_css_class("suggested-action");
-    } else if COLOR_THEME == config::ColorTheme::Sparking {
+    } else if config::COLOR_THEME == config::ColorTheme::Sparking {
         button.add_css_class("yel");
     }
     button.set_halign(gtk::Align::End);
