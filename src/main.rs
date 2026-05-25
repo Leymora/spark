@@ -1,5 +1,8 @@
+#![allow(unused)]
+
 mod config;
 mod custom_button;
+mod common;
 
 use custom_button::CustomButton;
 
@@ -9,18 +12,19 @@ use std::io::BufRead;
 use std::io::BufReader;
 use std::io::Write;
 
-use std::time::Duration;
 use std::cell::Cell;
 use std::cell::RefCell;
 use std::env;
 use std::path::Path;
 use std::process::Command;
 use std::rc::Rc;
+use std::time::Duration;
 
 use adw::prelude::*;
 use adw::{
     AboutDialog, ActionRow, Application, ApplicationWindow, Banner, ButtonRow, ComboRow, Dialog,
-    EntryRow, HeaderBar, StatusPage, StyleManager, SwitchRow, ToolbarStyle, ToolbarView, Window, glib, gio
+    EntryRow, HeaderBar, StatusPage, StyleManager, SwitchRow, ToolbarStyle, ToolbarView, Window,
+    gio, glib,
 };
 use gtk::{
     Adjustment, Box, CheckButton, CssProvider, Label, ListBox, ListView, MenuButton, Orientation,
@@ -33,13 +37,39 @@ const APP_ID: &str = "dev.labellum.spark";
 
 fn main() -> glib::ExitCode {
 
+    // Read Command Line Arguments
+    let args: Vec<String> = env::args().collect();
+
+    // Check Command Line Arguments ----------------------------
+    if args.len() > 1 {
+        let mut query: &String;
+
+        for n in 1..args.len() {
+            query = &args[n];
+
+            if query == "--version" || query == "-v" {
+                println!("\n\x1b[33;1mSpark Version: {}\x1b[0m", config::VERSION);
+                println!("\x1b[36m\tLibadwaita: 0.9.1");
+                println!("\x1b[31m\tGTK4: 0.11.3");
+                println!("\x1b[32m\tserialport: 4.8.1");
+                println!("\n\x1b[30;45mRepository: {}\x1b[0m\n", env!("CARGO_PKG_REPOSITORY"));
+                return glib::ExitCode::SUCCESS;
+            }
+            else if query == "--dev" || query == "-d" {
+                unsafe { config::DEV_MODE = true };
+            }
+        }
+    }
+    // ---------------------------------------------------------
+
     // Disable DTR with "stty -F /dev/ttyACM0 -hupcl" to hopefully stop Arduino from resetting when a serial connection is opened
-/*     let _process = Command::new("stty")
-        .arg("-F")
-        .arg("/dev/ttyACM0")
-        .arg("-hupcl")
-        .status();
- */
+    /*     let _process = Command::new("stty")
+           .arg("-F")
+           .arg("/dev/ttyACM0")
+           .arg("-hupcl")
+           .status();
+    */
+
     // Register and include resources
     gio::resources_register_include!("resources/resources.gresource")
         .expect("Failed to register resources.");
@@ -52,7 +82,8 @@ fn main() -> glib::ExitCode {
     app.connect_activate(build_ui);
 
     println!("\n\x1b[30;43mWelcome to Spark 󱐋\x1b[0m\n");
-    app.run();
+
+    app.run_with_args(&vec![""]); // Always run with empty args. We handle the args ourselves at the beginning of main()
 
     println!("\n🗑️ Deleting temp files...\n");
 
@@ -101,12 +132,12 @@ fn build_ui(app: &Application) {
     let current_dir = env::current_dir().unwrap();
 
     // Disable DTR with "stty -F /dev/ttyACM0 -hupcl"
-/*     let _process = Command::new("stty")
-        .arg("-F")
-        .arg("/dev/ttyACM0")
-        .arg("-hupcl")
-        .status()
-        .expect("shidd"); */
+    /*     let _process = Command::new("stty")
+    .arg("-F")
+    .arg("/dev/ttyACM0")
+    .arg("-hupcl")
+    .status()
+    .expect("shidd"); */
 
     println!("\n📦 Creating temp files...\n");
 
@@ -276,10 +307,17 @@ fn build_ui(app: &Application) {
                         .expect("Failed to open port"),
                 );
                 connected.set(true);
-            } else {
-                c_banner.set_revealed(true);
+            } 
+            else { 
+                //c_banner.set_revealed(true);
+                common::notify(common::NotiyConfig{
+                    summary: "Could not connect to Serial Port".to_string(),
+                    body: "Path: ".to_owned() + "\"" + &test_path.as_str() + "\"" + " was not found",
+                    ..Default::default()});
             }
-        } else {
+
+        }
+        else {
             if config::COLOR_THEME == config::ColorTheme::Accent {
                 connect_button.set_css_classes(&["suggested-action"]);
             } else if config::COLOR_THEME == config::ColorTheme::Sparking {
@@ -411,7 +449,7 @@ fn build_ui(app: &Application) {
         .build();
 
     tool_bar.add_top_bar(&header_bar);
-    tool_bar.add_top_bar(&banner_no_path); //Works but causes white bar on top of header_bar
+    //tool_bar.add_top_bar(&banner_no_path); //Works but causes white bar on top of header_bar
     tool_bar.set_content(Some(&viewport_main));
 
     // Create a window and set the title
@@ -421,7 +459,7 @@ fn build_ui(app: &Application) {
         .content(&tool_bar)
         .build();
 
-    if config::DEV_MODE == true {
+    if unsafe { config::DEV_MODE } == true {
         header_bar.add_css_class("dev");
         window.add_css_class("dev");
         println!("\n🚧 Running in Dev mode 🚧\n")
@@ -434,12 +472,8 @@ fn build_ui(app: &Application) {
         about_diag.present(Some(&window));
     });
 
-    fn send_serial_data(
-        portt: &mut std::boxed::Box<dyn serialport::SerialPort>,
-        baudd: u32,
-        cmd: &str,
-        txtbuffer: &TextBuffer,
-    ) {
+    fn send_serial_data(portt: &mut std::boxed::Box<dyn serialport::SerialPort>, baudd: u32, cmd: &str, txtbuffer: &TextBuffer,) {
+        
         portt
             .set_baud_rate(baudd)
             .expect("Failed to set a baudrate of {baudd}");

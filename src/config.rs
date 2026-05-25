@@ -1,8 +1,8 @@
 pub const VERSION: &str = env!("CARGO_PKG_VERSION");
-pub static GETTEXT_PACKAGE: &str = "spark-serial";
-pub static LOCALEDIR: &str = "/app/share/locale";
-pub static PKGDATADIR: &str = "/app/share/spark";
-pub static DEV_MODE: bool = true;
+//pub static GETTEXT_PACKAGE: &str = "spark-serial";
+//pub static LOCALEDIR: &str = "/app/share/locale";
+//pub static PKGDATADIR: &str = "/app/share/spark";
+pub static mut DEV_MODE: bool = false;
 
 #[derive(PartialEq, Eq)]
 pub enum ColorTheme {

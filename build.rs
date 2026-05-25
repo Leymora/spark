@@ -10,7 +10,7 @@ fn main() {
     .args(&[&mkdir_target])
     .status().expect("Failed to make resource directory");
 
-    let compile_status = Command::new("glib-compile-resources")
+    let _compile_status = Command::new("glib-compile-resources")
     .args(&["--sourcedir=src/resources", &target, "src/resources/resources.gresource.xml"])
     .status().expect("glib-compile failed to compile resources");
 
