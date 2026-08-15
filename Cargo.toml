@@ -1,6 +1,6 @@
 [package]
 name = "spark-serial"
-version = "0.1.8"
+version = "0.1.9"
 edition = "2024"
 description = "A neat and tidy Serial terminal written in GTK4/Libadwaita - Still a work in progress"
 repository = "https://github.com/Leymora/spark"
