@@ -52,7 +52,7 @@ fn main() -> glib::ExitCode {
                 println!("\x1b[36m\tLibadwaita: 0.9.1");
                 println!("\x1b[31m\tGTK4: 0.11.3");
                 println!("\x1b[32m\tserialport: 4.8.1");
-                println!("\n\x1b[30;45mRepository: {}\x1b[0m\n", env!("CARGO_PKG_REPOSITORY"));
+                println!("\n\x1b[30;45mRepository: \x1b[4m{}\x1b[0m\n", env!("CARGO_PKG_REPOSITORY"));
                 return glib::ExitCode::SUCCESS;
             }
             else if query == "--dev" || query == "-d" {
@@ -142,6 +142,8 @@ fn build_ui(app: &Application) {
     println!("\n📦 Creating temp files...\n");
 
     let _create_tmp_dir = Command::new("mkdir").arg("/tmp/dev.labellum.spark").spawn();
+
+    std::thread::sleep(Duration::from_millis(500));
 
     let load_tmp_s1 = String::from_utf8(
         Command::new("mktemp")
